@@ -2,18 +2,36 @@ package com.company;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
-        File file = new File("./src/com/company/Day1Input.txt");
-        Day1 task = new Day1();
+    public static ArrayList<String> processedInput(File input) throws FileNotFoundException {
+        ArrayList<String> output = new ArrayList<>();
+        Scanner scanner = new Scanner(input);
 
+        while(scanner.hasNextLine()){
+            String line = scanner.nextLine();
+            output.add(line);
+        }
+
+        return output;
+    }
+
+    public static void main(String[] args) {
+        //Input shenanigans
+        File file = new File("./src/com/company/Day2Input.txt");
+        ArrayList<String> input = null;
         try {
-            System.out.println(task.solve2(file));
+            input = processedInput(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        Day2 task = new Day2();
+
+        System.out.println(task.solve2(input));
 
     }
 }
