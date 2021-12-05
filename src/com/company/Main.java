@@ -31,7 +31,7 @@ public class Main {
 
         Day4 task = new Day4();
 
-        System.out.println(task.solve1(input));
+        System.out.println(task.solve2(input));
 
     }
 }

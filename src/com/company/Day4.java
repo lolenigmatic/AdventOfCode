@@ -5,13 +5,17 @@ import java.util.Iterator;
 import java.util.Scanner;
 
 public class Day4 {
-    public int solve1(ArrayList<String> input){
-
-        String[] numbersStr = input.get(0).split(",");//bingo input
+    public ArrayList<Integer> parseCalledOutNums(String[] numbersStr){
         ArrayList<Integer> numbers = new ArrayList<>();
+
         for (String number : numbersStr){
             numbers.add(Integer.parseInt(number));
         }
+
+        return numbers;
+    }
+
+    public int[][][] parseBingoBoards(ArrayList<String> input){
 
         //get an input that does not have the empty spaces in between and single spaces between numbers
         ArrayList<String> parsedInput = new ArrayList<>();
@@ -35,7 +39,17 @@ public class Day4 {
             }
         }
 
-        //store bingo boards as 2d arrays, every time something gets marked off, change value to -1
+        return BINGO;
+    }
+
+    public int solve1(ArrayList<String> input){
+
+        String[] numbersStr = input.get(0).split(",");//bingo input
+
+        ArrayList<Integer> numbers = parseCalledOutNums(numbersStr);
+
+        int[][][] BINGO = parseBingoBoards(input);
+
         int[][] bingoBoard = new int[0][];
         int numCalled = 0;
 
@@ -53,6 +67,48 @@ public class Day4 {
                     bingoBoard = BINGO[i];
                     numCalled = num;
                     break biggestLoop;
+                }
+            }
+        }
+
+        //printBingoBoards(BINGO);
+        int result = sumUnticked(bingoBoard) * numCalled;
+        return result;
+    }
+
+    public int solve2(ArrayList<String> input){
+
+        String[] numbersStr = input.get(0).split(",");//bingo input
+
+        ArrayList<Integer> numbers = parseCalledOutNums(numbersStr);
+        int[][][] BINGO = parseBingoBoards(input);
+
+        int[][] bingoBoard = new int[0][];
+        int numCalled = 0;
+        boolean[] bingoBoardHasBingoed = new boolean[BINGO.length];
+
+        for(int i = 0; i < bingoBoardHasBingoed.length; i++){
+            bingoBoardHasBingoed[i] = false;
+        }
+
+        biggestLoop:
+        for(int num : numbers){
+            for(int i = 0; i < BINGO.length; i++){
+                if(!bingoBoardHasBingoed[i]) {
+                    for (int j = 0; j < 5; j++) {
+                        for (int k = 0; k < 5; k++) {
+                            if (BINGO[i][j][k] == num) {
+                                BINGO[i][j][k] = -1;
+                            }
+                        }
+                    }
+                }
+                if(checkBingo(BINGO[i])){
+                    if(!bingoBoardHasBingoed[i]) {
+                        bingoBoardHasBingoed[i] = true;
+                        bingoBoard = BINGO[i];
+                        numCalled = num;
+                    }
                 }
             }
         }
