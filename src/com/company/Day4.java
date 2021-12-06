@@ -94,6 +94,8 @@ public class Day4 {
         biggestLoop:
         for(int num : numbers){
             for(int i = 0; i < BINGO.length; i++){
+
+                //stop tracking if bingo has already been achieved on a board.
                 if(!bingoBoardHasBingoed[i]) {
                     for (int j = 0; j < 5; j++) {
                         for (int k = 0; k < 5; k++) {
@@ -103,6 +105,7 @@ public class Day4 {
                         }
                     }
                 }
+
                 if(checkBingo(BINGO[i])){
                     if(!bingoBoardHasBingoed[i]) {
                         bingoBoardHasBingoed[i] = true;

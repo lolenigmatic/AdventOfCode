@@ -21,17 +21,18 @@ public class Main {
 
     public static void main(String[] args) {
         //Input shenanigans
-        File file = new File("./src/com/company/Day4Input.txt");
+        File file = new File("./src/com/company/Day5.txt");
         ArrayList<String> input = null;
+
         try {
             input = processedInput(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        Day4 task = new Day4();
+        Day5 task = new Day5();
 
-        System.out.println(task.solve2(input));
+        System.out.println(task.solve1(input));
 
     }
 }
