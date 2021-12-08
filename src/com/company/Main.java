@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Input shenanigans
-        File file = new File("./src/com/company/Day5.txt");
+        File file = new File("./src/com/company/Day5Input.txt");
         ArrayList<String> input = null;
 
         try {
@@ -32,7 +32,7 @@ public class Main {
 
         Day5 task = new Day5();
 
-        System.out.println(task.solve1(input));
+        System.out.println(task.solve2(input));
 
     }
 }
