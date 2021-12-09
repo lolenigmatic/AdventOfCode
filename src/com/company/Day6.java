@@ -57,13 +57,7 @@ public class Day6 {
             fishes[8] = newFishes;
         }
 
-        long count = 0;
-
-        for(int i = 0; i < 9; i++){
-            count += fishes[i];
-        }
-
-        return count;
+        return Arrays.stream(fishes).sum();
     }
 }
 

@@ -1,22 +1,14 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Day7 {
     public int solve1(ArrayList<String> input){
         String[] inputSplit = input.get(0).split(",");
-        ArrayList<Integer> crabPos = new ArrayList<>();
+        ArrayList<Integer> crabPos = parseInput(inputSplit);
 
-        int max = 0;
-
-        for (String num : inputSplit) {
-            int thisNum = Integer.parseInt(num);
-            crabPos.add(thisNum);
-
-            if(max < thisNum){
-                max = thisNum;
-            }
-        }
+        int max = Collections.max(crabPos);
 
         int minFuel = 999999999;
 
@@ -37,18 +29,9 @@ public class Day7 {
 
     public int solve2(ArrayList<String> input){
         String[] inputSplit = input.get(0).split(",");
-        ArrayList<Integer> crabPos = new ArrayList<>();
+        ArrayList<Integer> crabPos = parseInput(inputSplit);
 
-        int max = 0;
-
-        for (String num : inputSplit) {
-            int thisNum = Integer.parseInt(num);
-            crabPos.add(thisNum);
-
-            if(max < thisNum){
-                max = thisNum;
-            }
-        }
+        int max = Collections.max(crabPos);
 
         int minFuel = 999999999;
 
@@ -66,5 +49,16 @@ public class Day7 {
         }
 
         return minFuel;
+    }
+
+    public ArrayList<Integer> parseInput(String[] input){
+        ArrayList<Integer> output = new ArrayList<>();
+
+        for (String num : input) {
+            int thisNum = Integer.parseInt(num);
+            output.add(thisNum);
+        }
+
+        return output;
     }
 }
