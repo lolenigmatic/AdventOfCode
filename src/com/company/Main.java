@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         //Input shenanigans
-        File file = new File("./src/com/company/Day6Input.txt");
+        File file = new File("./src/com/company/Day7Input.txt");
         ArrayList<String> input = null;
 
         try {
@@ -30,7 +30,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        Day6 task = new Day6();
+        Day7 task = new Day7();
 
         System.out.println(task.solve2(input));
 
