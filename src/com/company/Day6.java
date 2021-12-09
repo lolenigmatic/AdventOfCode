@@ -51,9 +51,7 @@ public class Day6 {
             long newFishes = fishes[0];
             fishes[0] = 0;
 
-            for (int j = 1; j < 9; j++){
-                fishes[j-1] = fishes[j];
-            }
+            System.arraycopy(fishes, 1, fishes, 0, 8);
 
             fishes[6] += newFishes;
             fishes[8] = newFishes;
