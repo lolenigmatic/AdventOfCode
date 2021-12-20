@@ -34,7 +34,7 @@ public class Day11 {
                         if(grid[col][row][0] > 9){
                             grid[col][row][0] = -1; //minus 10?
                             octopusFlashed = true;
-                            grid = flash(grid, col, row);
+                            flash(grid, col, row);
                             totalFlashes++;
                             grid[col][row][1] = 1;
                         }
@@ -82,7 +82,7 @@ public class Day11 {
                         if(grid[col][row][0] > 9){
                             grid[col][row][0] = -1; //minus 10?
                             octopusFlashed = true;
-                            grid = flash(grid, col, row);
+                            flash(grid, col, row);
                             grid[col][row][1] = 1;
                         }
                     }
@@ -104,7 +104,6 @@ public class Day11 {
     }
 
     private int[][][] flash(int[][][] grid, int x, int y) {
-        int[][][] newGrid = grid;
 
         int xLimit = grid.length - 1;
         int yLimit = grid[0].length - 1;
@@ -112,13 +111,13 @@ public class Day11 {
         for (int dx = -1; dx < 2; dx++) {
             if (x + dx >= 0 && x + dx <= xLimit) {
                 for (int dy = -1; dy < 2; dy++) {
-                    if (y + dy >= 0 && y + dy <= yLimit && newGrid[x + dx][y+dy][1] == 0) {
-                        newGrid[x + dx][y + dy][0]++;
+                    if (y + dy >= 0 && y + dy <= yLimit && grid[x + dx][y+dy][1] == 0) {
+                        grid[x + dx][y + dy][0]++;
                     }
                 }
             }
         }
 
-        return newGrid;
+        return grid;
     }
 }
