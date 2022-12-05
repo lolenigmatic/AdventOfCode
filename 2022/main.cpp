@@ -1,4 +1,4 @@
-#include "day02.h"
+#include "day03.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -10,8 +10,6 @@ using std::cout;
 using std::endl;
 
 int main(){
-    int retval = 0;
-
     string text = "";
     ifstream MyReadFile("input.txt");
     vector<string> file;
@@ -20,5 +18,7 @@ int main(){
         file.push_back(text);
     }
 
-    cout<<d2_p2(file);
+    cout<<d3_p2(file);
+
+    return 0;
 }
