@@ -1,4 +1,4 @@
-#include "day01.h"
+#include "day02.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -13,12 +13,12 @@ int main(){
     int retval = 0;
 
     string text = "";
-    ifstream MyReadFile("day1input.txt");
+    ifstream MyReadFile("input.txt");
     vector<string> file;
 
     while(std::getline(MyReadFile, text)){
         file.push_back(text);
     }
 
-    cout<<highest_calories_top_three(file);
+    cout<<d2_p2(file);
 }

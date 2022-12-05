@@ -10,7 +10,7 @@ using std::distance;
 using std::cout;
 using std::endl;
 
-int highest_calories(vector<string> file){
+int d1_p1(vector<string> file){
     int total = 0;
     vector<int> elves;
     for(int i = 0; i < file.size(); ++i){
@@ -27,7 +27,7 @@ int highest_calories(vector<string> file){
     return *max_element(elves.begin(), elves.end());
 }
 
-int highest_calories_top_three(vector<string> file){
+int d1_p2(vector<string> file){
     int total = 0;
     vector<int> elves;
     for(int i = 0; i < file.size(); ++i){
