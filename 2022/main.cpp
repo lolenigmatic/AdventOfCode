@@ -1,4 +1,4 @@
-#include "day03.h"
+#include "day04.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -18,7 +18,7 @@ int main(){
         file.push_back(text);
     }
 
-    cout<<d3_p2(file);
+    cout<<d4_p2(file);
 
     return 0;
 }
