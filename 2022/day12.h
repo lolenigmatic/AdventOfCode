@@ -11,9 +11,10 @@ public:
     char height;
     vector<int> coords;
     int distance;
+    bool visited;
 
     Node(char heightIn, vector<int> coordsIn)
-        :height(heightIn), coords(coordsIn), distance(2147483647){
+        :height(heightIn), coords(coordsIn), distance(200000000), visited(false){
             if(height == 'S')
                 distance = 0;
         }
@@ -21,11 +22,6 @@ public:
 
 bool node_compare(Node* a, Node* b){
     return a->distance < b->distance;
-}
-
-void set_new_dist(int currentDist, Node& node) {
-    if(++currentDist < node.distance)
-        node.distance = currentDist;
 }
 
 bool check(int coords, int delta, int range) {
@@ -42,36 +38,103 @@ bool traversable(Node a, Node b) {
 int d12_p1(vector<string> file) {
     vector<vector<Node*>> mountain;
     vector<int> deltas = {-1, 1};
-    vector<Node*> to_visit;
+    deque<Node*> to_visit;
     for(int i = 0; i < file.size(); ++i) {
         vector<Node*> row;
         for(int j = 0; j < file[i].size(); ++j) {
             Node* node = new Node(file[i][j], {i, j});
             row.push_back(node);
-            to_visit.push_back(node);
+            if(node->distance == 0) {
+                to_visit.push_back(node);
+                node->visited = true;
+            }
         }
         mountain.push_back(row);
     }
 
     while(!to_visit.empty()) {
-        sort(to_visit.begin(), to_visit.end(), node_compare);
-        Node* current = to_visit[0];
+        Node* current = to_visit.front();
         vector<int> coords = current->coords;
+        cout<<coords[0]<<" "<<coords[1]<<endl;
+        cout<<current->distance<<endl;
         //add adjacent nodes
         for(auto delta : deltas) {
-            if(check(coords[0], delta, mountain.size()) && traversable(*current, *mountain[coords[0] + delta][coords[1]])){
-                set_new_dist(current->distance, *mountain[coords[0] + delta][coords[1]]);
+            if(check(coords[0], delta, mountain.size()) && traversable(*current, *mountain[coords[0] + delta][coords[1]]) && !mountain[coords[0] + delta][coords[1]]->visited){
+                mountain[coords[0] + delta][coords[1]]->distance = current->distance + 1;
+                to_visit.push_back(mountain[coords[0] + delta][coords[1]]);
+                mountain[coords[0] + delta][coords[1]]->visited = true;
             }
-            if(check(coords[1], delta, mountain[coords[0]].size()) && traversable(*current, *mountain[coords[0]][coords[1] + delta])){
-                set_new_dist(current->distance, *mountain[coords[0]][coords[1]+delta]);
+            if(check(coords[1], delta, mountain[coords[0]].size()) && traversable(*current, *mountain[coords[0]][coords[1] + delta]) && !mountain[coords[0]][coords[1] + delta]->visited){
+                mountain[coords[0]][coords[1]+delta]->distance = current->distance + 1;
+                to_visit.push_back(mountain[coords[0]][coords[1]+delta]);
+                mountain[coords[0]][coords[1]+delta]->visited = true;
             } 
         }
-
-        to_visit.erase(to_visit.begin());
+        to_visit.pop_front();
         if(current->height == 'E') {
             return current->distance;
         }
     }
 
     return -1;
+}
+
+int d12_p2(vector<string> file) {
+    vector<vector<Node*>> mountain;
+    vector<int> deltas = {-1, 1};
+    vector<vector<int>> possible_starts;
+    vector<int> min_distances;
+
+    for(int i = 0; i < file.size(); ++i) {
+        vector<Node*> row;
+        for(int j = 0; j < file[i].size(); ++j) {
+            Node* node = new Node(file[i][j], {i, j});
+            row.push_back(node);
+            if(node->height == 'S')
+                node->height = 'a';
+            if(node->height == 'a') {
+                possible_starts.push_back({i, j});
+            }
+        }
+        mountain.push_back(row);
+    }
+    for(auto starting_coord : possible_starts) {
+        deque<Node*> to_visit;
+        for(int i = 0; i < file.size(); ++i) {
+            for(int j = 0; j < file[i].size(); ++j) {
+                if(i == starting_coord[0] && j == starting_coord[1]){
+                    to_visit.push_back(mountain[i][j]);
+                    mountain[i][j]->distance = 0;
+                    mountain[i][j]->visited = true;
+                }
+                else {
+                    mountain[i][j]->distance = 200000000;
+                    mountain[i][j]->visited = false;
+                }
+            }
+        }
+        while(!to_visit.empty()) {
+            Node* current = to_visit.front();
+            vector<int> coords = current->coords;
+            //add adjacent nodes
+            for(auto delta : deltas) {
+                if(check(coords[0], delta, mountain.size()) && traversable(*current, *mountain[coords[0] + delta][coords[1]]) && !mountain[coords[0] + delta][coords[1]]->visited){
+                    mountain[coords[0] + delta][coords[1]]->distance = current->distance + 1;
+                    to_visit.push_back(mountain[coords[0] + delta][coords[1]]);
+                    mountain[coords[0] + delta][coords[1]]->visited = true;
+                }
+                if(check(coords[1], delta, mountain[coords[0]].size()) && traversable(*current, *mountain[coords[0]][coords[1] + delta]) && !mountain[coords[0]][coords[1] + delta]->visited){
+                    mountain[coords[0]][coords[1]+delta]->distance = current->distance + 1;
+                    to_visit.push_back(mountain[coords[0]][coords[1]+delta]);
+                    mountain[coords[0]][coords[1]+delta]->visited = true;
+                } 
+            }
+            to_visit.pop_front();
+            if(current->height == 'E') {
+                min_distances.push_back(current->distance);
+            }
+        }
+    }
+    
+    return *min_element(min_distances.begin(), min_distances.end());
 }

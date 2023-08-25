@@ -18,7 +18,7 @@ int main(){
         file.push_back(text);
     }
 
-    cout<<d12_p1(file)<<endl;
+    cout<<d12_p2(file)<<endl;
 
     return 0;
 }
