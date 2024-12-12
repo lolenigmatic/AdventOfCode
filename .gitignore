@@ -35,4 +35,4 @@
 .vscode/
 
 #Input files
-*input.txt
+*.txt
